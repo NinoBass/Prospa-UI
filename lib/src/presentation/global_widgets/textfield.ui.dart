@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show TextInputFormatter;
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:gradient_borders/gradient_borders.dart';
 import 'package:prospa_assessment/src/presentation/resources/res.dart';
 
 class TextFieldUi extends StatefulWidget {
@@ -125,18 +124,6 @@ class _TextFieldUiState extends State<TextFieldUi> {
       ),
     );
   }
-}
-
-GradientUnderlineInputBorder gradientInputBorder() {
-  return const GradientUnderlineInputBorder(
-    gapPadding: 0,
-    gradient: LinearGradient(
-      colors: [
-        brandPrimary,
-        brandSecondary,
-      ],
-    ),
-  );
 }
 
 UnderlineInputBorder regularInputBorder(
