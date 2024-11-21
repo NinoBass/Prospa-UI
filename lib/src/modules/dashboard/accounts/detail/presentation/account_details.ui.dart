@@ -25,6 +25,7 @@ class AccountDetailsUi extends GetView<AccountDetailsController> {
     return GestureDetector(
       onTap: () => removePrimaryFocusFromUiElement(context),
       child: Scaffold(
+        backgroundColor: white,
         appBar: AppBar(
           backgroundColor: primary600,
           leading: ButtonPressAnimation(
