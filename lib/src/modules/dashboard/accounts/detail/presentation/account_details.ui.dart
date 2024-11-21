@@ -39,7 +39,7 @@ class AccountDetailsUi extends GetView<AccountDetailsController> {
           ),
           actions: [
             ButtonPressAnimation(
-              onTap:() => controller.openAccountOptionsModal(context),
+              onTap: () => controller.openAccountOptionsModal(context),
               child: Container(
                 height: 32.r,
                 padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -126,6 +126,82 @@ class AccountDetailsUi extends GetView<AccountDetailsController> {
               child: SafeArea(
                 child: CustomScrollView(
                   slivers: [
+                    SliverToBoxAdapter(
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 16).r,
+                        margin: const EdgeInsets.symmetric(vertical: 24).r,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            Flexible(
+                              child: AccountTransactionFilterUi(
+                                icon: exchangeIcon,
+                                name: 'Transfer',
+                                onTap: () {},
+                              ),
+                            ),
+                            Flexible(
+                              child: AccountTransactionFilterUi(
+                                icon: receiptIcon,
+                                name: 'Utilities',
+                                onTap: () {},
+                              ),
+                            ),
+                            Flexible(
+                              child: AccountTransactionFilterUi(
+                                icon: cardIcon,
+                                name: 'Card',
+                                onTap: () {},
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    SliverToBoxAdapter(
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 32).r,
+                        margin: const EdgeInsets.only(bottom: 24).r,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: [
+                            Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const Expanded(
+                                  child: TextUi.body2(
+                                    data: 'Summary',
+                                    color: primary600,
+                                    fontFamily: semiBoldText,
+                                  ),
+                                ),
+                                const TextUi.body3(
+                                  data: 'This month',
+                                  color: primary300,
+                                  fontFamily: mediumText,
+                                ),
+                                const Gap.x4(),
+                                ButtonPressAnimation(
+                                  onTap: () {},
+                                  child: Container(
+                                    height: 16.r,
+                                    width: 16.r,
+                                    padding: const EdgeInsets.only(top: 2).r,
+                                    alignment: Alignment.topCenter,
+                                    child: SvgIconUi(
+                                      downArrowIcon,
+                                      width: 12.r,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const Gap.x20(),
+                            const AccountSummaryIndicatorUi(),
+                          ],
+                        ),
+                      ),
+                    ),
                     SliverPadding(
                       padding: const EdgeInsets.symmetric(horizontal: 16).r,
                       sliver: SliverFillRemaining(
@@ -133,75 +209,6 @@ class AccountDetailsUi extends GetView<AccountDetailsController> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.stretch,
                           children: [
-                            const Gap.x24(),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: [
-                                Flexible(
-                                  child: AccountTransactionFilterUi(
-                                    icon: exchangeIcon,
-                                    name: 'Transfer',
-                                    onTap: () {},
-                                  ),
-                                ),
-                                Flexible(
-                                  child: AccountTransactionFilterUi(
-                                    icon: receiptIcon,
-                                    name: 'Utilities',
-                                    onTap: () {},
-                                  ),
-                                ),
-                                Flexible(
-                                  child: AccountTransactionFilterUi(
-                                    icon: cardIcon,
-                                    name: 'Card',
-                                    onTap: () {},
-                                  ),
-                                ),
-                              ],
-                            ),
-                            const Gap.x24(),
-                            Container(
-                              padding: const EdgeInsets.all(16).r,
-                              child: Column(
-                                children: [
-                                  Row(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      const Expanded(
-                                        child: TextUi.body2(
-                                          data: 'Summary',
-                                          color: primary600,
-                                          fontFamily: semiBoldText,
-                                        ),
-                                      ),
-                                      const TextUi.body3(
-                                        data: 'This month',
-                                        color: primary300,
-                                        fontFamily: mediumText,
-                                      ),
-                                      const Gap.x4(),
-                                      ButtonPressAnimation(
-                                        onTap: () {},
-                                        child: Container(
-                                          height: 16.r,
-                                          width: 16.r,
-                                          padding: const EdgeInsets.only(top: 2).r,
-                                          alignment: Alignment.topCenter,
-                                          child: SvgIconUi(
-                                            downArrowIcon,
-                                            width: 12.r,
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  const Gap.x20(),
-                                  const AccountSummaryIndicatorUi(),
-                                ],
-                              ),
-                            ),
-                            const Gap.x24(),
                             ...groupBy(
                               dummyTransactions,
                               (transaction) => DateTime(
@@ -209,7 +216,7 @@ class AccountDetailsUi extends GetView<AccountDetailsController> {
                                 transaction.dateCreated.month,
                                 transaction.dateCreated.day,
                               ),
-                            ).entries.map(
+                            ).entries.map<Widget>(
                               (entry) {
                                 final date = entry.key;
                                 var convertedDate = '';
@@ -233,14 +240,16 @@ class AccountDetailsUi extends GetView<AccountDetailsController> {
                                       color: primary600,
                                     ),
                                     const Gap.x8(),
-                                    SeparatedColumn(
-                                      mainAxisSize: MainAxisSize.min,
-                                      separatorBuilder: () => const Divider(height: 0, color: grayScale50),
-                                      children: entry.value.map((transaction) {
-                                        return TransactionsTileUi(transaction: transaction);
-                                      }).toList(),
+                                    Flexible(
+                                      child: SeparatedColumn(
+                                        mainAxisSize: MainAxisSize.min,
+                                        separatorBuilder: () => const Divider(height: 0, color: grayScale50),
+                                        children: entry.value.map((transaction) {
+                                          return TransactionsTileUi(transaction: transaction);
+                                        }).toList(),
+                                      ),
                                     ),
-                                    const Gap(12),
+                                    // const Gap(12),
                                   ],
                                 );
                               },
@@ -278,7 +287,7 @@ class AccountTransactionFilterUi extends StatelessWidget {
     return ButtonPressAnimation(
       onTap: onTap,
       child: SizedBox(
-        width: 54.r,
+        width: 72.r,
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [

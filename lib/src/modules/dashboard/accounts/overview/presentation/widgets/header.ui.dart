@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:prospa_assessment/src/presentation/resources/res.dart';
+import 'package:prospa_assessment/src/presentation/utility/button_pressed_animation.util.dart';
 import 'package:prospa_assessment/src/presentation/widgets.dart';
- 
+
 class AccountsOverviewHeaderUi extends StatelessWidget {
   const AccountsOverviewHeaderUi({
     super.key,
@@ -21,10 +22,13 @@ class AccountsOverviewHeaderUi extends StatelessWidget {
               fontFamily: boldText,
             ),
           ),
-          Image.asset(
-            dummyUserAvatarImg,
-            height: 40.r,
-            width: 40.r,
+          ButtonPressAnimation(
+            onTap: () {},
+            child: Image.asset(
+              dummyUserAvatarImg,
+              height: 40.r,
+              width: 40.r,
+            ),
           ),
         ],
       ),
